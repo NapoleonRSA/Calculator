@@ -1,17 +1,29 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<div class="container-fluid" id="calculatorDiv">
-    <h2 style="color: #0000cd">Calculator </h2>
+
+
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#version1" aria-controls="version1" role="tab" data-toggle="tab">Version 1</a></li>
+    <li role="presentation"><a href="#version2" aria-controls="version2" role="tab" data-toggle="tab">Version 2</a></li>
+
+</ul>
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane fade in active" id="version1">
+
+
+    <div class="container-fluid" id="calculatorDiv">
+        <h1 style="color: #0000cd">Calculator </h1>
         <p> Enter the numbers to calculate with : </p>
         <div class="row">
-        <div class="col-xs-2">
-            <b> Number 1 :</b>
-            <input type="number" class="form-control" data-bind="numericValue:number1" min="0" max="9" />
-            <b> Number 2 :</b>
-            <input type="number" data-bind="numericValue:number2" class="form-control" size="3" width="3" min="0" max="9" />
-        </div>
+            <div class="col-xs-2">
+                <b> Number 1 :</b>
+                <input type="number" class="form-control" data-bind="numericValue:number1" min="0" max="9" />
+                <b> Number 2 :</b>
+                <input type="number" data-bind="numericValue:number2" class="form-control" size="3" width="3" min="0" max="9" />
             </div>
+        </div>
         <div class="row">
             <p>
                 <div class="col-xs-4">
@@ -20,23 +32,55 @@
                 </div>
             </p>
         </div>
-    <div class="row">
-        <p>
-            <div class="col-xs-4">
-                <span><button type="button" data-bind="click:multiplyClick" class="btn-lg"> x </button></span>
-                <span><button type="button"data-bind="click:devideClick" class="btn-lg"> ÷ </button></span>
-            </div>
-        </p>
-    </div>
+        <div class="row">
+            <p>
+                <div class="col-xs-4">
+                    <span><button type="button" data-bind="click:multiplyClick" class="btn-lg"> x </button></span>
+                    <span><button type="button" data-bind="click:devideClick" class="btn-lg"> ÷ </button></span>
+                </div>
+            </p>
+        </div>
         <div class="row">
             <p>
                 <div class="well well-sm">
                     <span style="font-size: medium" class="col-xs=2">  <b>Answer :</b></span>
-                    <span  data-bind="text:answerMessage"></span>
+                    <span data-bind="text:answerMessage"></span>
                 </div>
             </p>
         </div>
     </div>
+        </div>
+    <div role="tabpanel" class="tab-pane fade in active" id="version2">
+        <h1 style="color: #b22222"> Calculator 2.0 </h1>
+        <div id="calulator">
+            <div class="numbers">
+                <span> <button type="button">C</button>          
+        <div class="well well-sm"> </div> 
+</span>
+                <span> <button type="button">7</button></span>
+                <span> <button type="button">8</button></span>
+                <span> <button type="button">9</button></span>
+                <span> <button type="button">+</button></span>
+                <span> <button type="button">6</button></span>
+                <span> <button type="button">5</button></span>
+                <span> <button type="button">4</button></span>
+                <span> <button type="button">-</button></span>
+                <span> <button type="button">3</button></span>
+                <span> <button type="button">2</button></span>
+                <span> <button type="button">1</button></span>
+                <span> <button type="button">x</button></span>
+                <span> <button type="button">0</button></span>
+                <span> <button type="button">.</button></span>
+                <span> <button type="button">=</button></span>
+                <span> <button type="button">÷</button></span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
 <script>
     var calculatorViewmodel= function() {
         var self = this;
