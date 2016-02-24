@@ -6,11 +6,11 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#version1" aria-controls="version1" role="tab" data-toggle="tab">Version 1</a></li>
-    <li role="presentation"><a href="#version2" aria-controls="version2" role="tab" data-toggle="tab">Version 2</a></li>
+    <li role="presentation"><a href="#version2" aria-controls="version2" role="tab" data-toggle="tab" class="active">Version 2</a></li>
 
 </ul>
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade in active" id="version1">
+    <div role="tabpanel" class="tab-pane fade in " id="version1">
 
 
         <div class="container-fluid" id="calculatorDiv">
@@ -43,7 +43,7 @@
             <div class="row">
                 <p>
                     <div class="well well-sm">
-                        <span style="font-size: medium" class="col-xs=2">  <b>Answer :</b></span>
+                        <span style="font-size: medium" class="col-xs-2">  <b>Answer :</b></span>
                         <span data-bind="text:answerMessage"></span>
                     </div>
                 </p>
@@ -52,7 +52,7 @@
     </div>
 
     <div role="tabpanel" class="tab-pane fade in active" id="version2">
-        <div class="container-fluid">  
+        <div class="container-fluid" id="calculatorDivtwo">  
             <h1 style="color: #b22222"> Calculator 2.0 </h1>
             <div id="calulator">
                 <div class="numbers">
@@ -60,8 +60,8 @@
                         <p>
                         <div class="col-xs-4">
                             <h3>
-                                <button type="button">C</button>
-                                <span class="label label-default">  0  </span>
+                                <input type="button" value="C" data-bind="click:clear">
+                                <span class="label label-default" data-bind="text:calcResult"></span>
                             </h3>
                             </div>
                           </p>
@@ -70,14 +70,14 @@
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span><button type="button" class="btn-lg" data-bind="numericValue:numberSeven" >7</button></span>
-                            <span><button type="button" class="btn-lg" data-bind="numericValue:numberEight" >8</button></span>
-                            <span><button type="button" class="btn-lg"  data-bind="numericValue:numberNine">9</button></span>
+                            <span><button type="button" class="btn-lg" onclick="numberClick(7)">7</button></span>
+                            <span><button type="button" class="btn-lg" onclick="numberClick(8)">8</button></span>
+                            <span><button type="button" class="btn-lg" onclick="numberClick(9)">9</button></span>
                             <span><button type="button" class="btn-lg" data-bind="click:addClick" >+</button></span>
                         </div>
                             </p>
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <p>
                         <div class="col-md-4">
                             <span> <button type="button" class="btn-lg" data-bind="numericValue:numberSix">6</button></span>
@@ -92,7 +92,7 @@
                         <div class="col-md-4">
                             <span> <button type="button" class="btn-lg" data-bind="numericValue:numberThree">3</button></span>
                             <span> <button type="button" class="btn-lg" data-bind="numericValue:numberTwo">2</button></span>
-                            <span> <button type="button" class="btn-lg">1</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberOne">1</button></span>
                             <span> <button type="button" class="btn-lg" data-bind="click:multiplyClick">x</button></span>
                         </div>
                         </p>
@@ -107,7 +107,7 @@
 
                         </div>
                             </p>
-                    </div>
+                    </div>*@
             </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
 
 
 <script>
-    var calculatorViewmodel= function() {
+    var calculatorViewmodel = function() {
         var self = this;
         self.number1 = ko.observable(0);
         self.number2 = ko.observable(0);
@@ -125,13 +125,13 @@
             self.answerMessage(newValue);
         });
         self.answerMessage = ko.observable("..click on expression button to show answer...");
-        self.addClick = function () {
+        self.addClick = function() {
             self.answer(self.number1() + self.number2());
         }
         self.subtractClick = function() {
             self.answer(self.number1() - self.number2());
         }
-        self.multiplyClick = function ()  {
+        self.multiplyClick = function() {
             self.answer(self.number1() * self.number2());
         }
         self.devideClick = function() {
@@ -142,5 +142,39 @@
 
     ko.applyBindings(new calculatorViewmodel(), document.getElementById("calculatorDiv"));
 
-  
+
+</script>
+<script>
+    var
+        value1 = "0"
+        value2 = "0";
+    var calculatorViewinhtml = function () {
+        var self = this;
+
+        self.calcResult = ko.observable("2");
+        self.calcResult.subscribe(function(newValue) {
+            self.calcResult(newValue);
+        });
+ 
+        self.clear = function() {
+            self.calcResult("0");
+        }
+        self.value1 = self.calcResult();
+        self.addClick = function() {
+
+            console.log(self.calcResult());
+            self.calcResult("0");
+        }
+    }
+
+    numberClick = function (number) {
+        if (calculatorViewModel.calcResult() === "0") {
+            calculatorViewModel.calcResult(number + "");
+        } else {
+            calculatorViewModel.calcResult(calculatorViewModel.calcResult() + number);
+        }
+    }
+
+    var calculatorViewModel = new calculatorViewinhtml();
+    ko.applyBindings(calculatorViewModel, document.getElementById("calculatorDivtwo"));
 </script>
