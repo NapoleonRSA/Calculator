@@ -70,44 +70,44 @@
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span><button type="button" class="btn-lg" onclick="numberClick(7)">7</button></span>
-                            <span><button type="button" class="btn-lg" onclick="numberClick(8)">8</button></span>
-                            <span><button type="button" class="btn-lg" onclick="numberClick(9)">9</button></span>
-                            <span><button type="button" class="btn-lg" data-bind="click:addClick" >+</button></span>
-                        </div>
-                            </p>
-                    </div>
-                    @*<div class="row">
-                        <p>
-                        <div class="col-md-4">
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberSix">6</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberFive">5</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberFour">4</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="click:subtractClick">-</button></span>
+                            <span><button type="button" class="btn-lg" onclick ="numberClick(7)">7</button></span>
+                            <span><button type="button" class="btn-lg" onclick ="numberClick(8)">8</button></span>
+                            <span><button type="button" class="btn-lg" onclick ="numberClick(9)">9</button></span>
+                            <span><button type="button" class="btn-lg" data-bind ="click:addClick" >+</button></span>
                         </div>
                             </p>
                     </div>
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberThree">3</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberTwo">2</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberOne">1</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="click:multiplyClick">x</button></span>
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(6)">6</button></span>
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(5)">5</button></span>
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(4)">4</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind ="click:subtractClick"> - </button></span>
+                        </div>
+                            </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                        <div class="col-md-4">
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(3)">3</button></span>
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(2)">2</button></span>
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(1)">1</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind ="click:multiplyClick">x</button></span>
                         </div>
                         </p>
                     </div>
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span> <button type="button" class="btn-lg" data-bind="numericValue:numberZero">0</button></span>
+                            <span> <button type="button" class="btn-lg" onclick ="numberClick(0)">0</button></span>
                             <span> <button type="button" class="btn-lg">.</button></span>
                             <span> <button type="button" class="btn-lg">=</button></span>
                             <span> <button type="button" class="btn-lg" data-bind="click:devideClick">÷</button></span>
 
                         </div>
                             </p>
-                    </div>*@
+                    </div>
             </div>
             </div>
         </div>
@@ -145,13 +145,12 @@
 
 </script>
 <script>
-    var
-        value1 = "0"
-        value2 = "0";
     var calculatorViewinhtml = function () {
         var self = this;
 
-        self.calcResult = ko.observable("2");
+        self.calcResult = ko.observable("0");
+        self.value1 = ko.observable("0");
+        self.value2 = ko.observable("0");
         self.calcResult.subscribe(function(newValue) {
             self.calcResult(newValue);
         });
@@ -159,11 +158,13 @@
         self.clear = function() {
             self.calcResult("0");
         }
-        self.value1 = self.calcResult();
+       
         self.addClick = function() {
-
-            console.log(self.calcResult());
+            self.value1 = self.calcResult();
             self.calcResult("0");
+            self.value2 = self.value1() + self.calcResult();
+            console.log(self.value2);
+     
         }
     }
 
