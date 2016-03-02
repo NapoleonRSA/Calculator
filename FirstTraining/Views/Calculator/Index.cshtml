@@ -55,55 +55,61 @@
         <div class="container-fluid" id="calculatorDivtwo">  
             <h1 style="color: #b22222"> Calculator 2.0 </h1>
             <div id="calulator">
-                <div class="numbers">
-                    <div class="row">
-                        <p>
-                        <div class="col-xs-4">
+                <div class="numbers" >                 
+                        <div class="row">
                             <h3>
-                                <input type="button" value="C" data-bind="click:clear">
-                                <span class="label label-default" data-bind="text:calcResult"></span>
+                                <p>
+                                    <div class="col-sm-1">
+                                        <input type="button" value="C" data-bind="click:clear">
+                                    </div>
+
+                                    <div class="col-sm-11">
+                                        <span class="label label-default" data-bind="text:currentValue"></span>
+                                        <span class="label label-default" data-bind="text:currentOperator"></span>
+                                        <span class="label label-default" data-bind="text:nextValue"></span>
+                                    </div>
+                                </p>
                             </h3>
-                            </div>
-                          </p>
-                        </div>
+                        </div>                  
+                </div>
                     </div>
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span><button type="button" class="btn-lg" onclick ="numberClick(7)">7</button></span>
-                            <span><button type="button" class="btn-lg" onclick ="numberClick(8)">8</button></span>
-                            <span><button type="button" class="btn-lg" onclick ="numberClick(9)">9</button></span>
-                            <span><button type="button" class="btn-lg" data-bind ="click:addClick" >+</button></span>
-                        </div>
-                            </p>
-                    </div>
-                    <div class="row">
-                        <p>
-                        <div class="col-md-4">
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(6)">6</button></span>
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(5)">5</button></span>
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(4)">4</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind ="click:subtractClick"> - </button></span>
+                            <span><button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(7) }">7</button></span>
+                            <span><button type="button" class="btn-lg" data-bind="click:function(data, event) { numberClick(8) }">8</button></span>
+                            <span><button type="button" class="btn-lg" data-bind="click:function(data, event) { numberClick(9) }">9</button></span>
+                            <span><button type="button" class="btn-lg" data-bind="click: function(data, event) { operatorClick('+') }">+</button></span>
                         </div>
                             </p>
                     </div>
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(3)">3</button></span>
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(2)">2</button></span>
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(1)">1</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind ="click:multiplyClick">x</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(6) }">6</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(5) }">5</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(4) }">4</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { operatorClick('-') }"> - </button></span>
+                        </div>
+                            </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                        <div class="col-md-4">
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(3) }">3</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(2) }">2</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(1) }">1</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click:function(data, event) { operatorClick('x') }">x</button></span>
                         </div>
                         </p>
                     </div>
                     <div class="row">
                         <p>
                         <div class="col-md-4">
-                            <span> <button type="button" class="btn-lg" onclick ="numberClick(0)">0</button></span>
-                            <span> <button type="button" class="btn-lg">.</button></span>
-                            <span> <button type="button" class="btn-lg">=</button></span>
-                            <span> <button type="button" class="btn-lg" data-bind="click:devideClick">÷</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: function(data, event) { numberClick(0) }">0</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click : function(data,event) { numberClick('.')}">.</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click: calculate">=</button></span>
+                            <span> <button type="button" class="btn-lg" data-bind="click:function(data, event) { operatorClick('/') }">÷</button></span>
 
                         </div>
                             </p>
@@ -112,7 +118,6 @@
             </div>
         </div>
     
-</div>
 
 
 <script>
@@ -148,32 +153,55 @@
     var calculatorViewinhtml = function () {
         var self = this;
 
-        self.calcResult = ko.observable("0");
-        self.value1 = ko.observable("0");
-        self.value2 = ko.observable("0");
-        self.calcResult.subscribe(function(newValue) {
-            self.calcResult(newValue);
+        self.currentValue = ko.observable("0");
+        self.currentOperator = ko.observable("");
+        self.nextValue = ko.observable("");
+        self.valueToUpdate = ko.observable();
+        self.currentValue.subscribe(function (newValue) {
+            self.currentValue(newValue);
         });
- 
-        self.clear = function() {
-            self.calcResult("0");
-        }
-       
-        self.addClick = function() {
-            self.value1 = self.calcResult();
-            self.calcResult("0");
-            self.value2 = self.value1() + self.calcResult();
-            console.log(self.value2);
-     
-        }
-    }
 
-    numberClick = function (number) {
-        if (calculatorViewModel.calcResult() === "0") {
-            calculatorViewModel.calcResult(number + "");
-        } else {
-            calculatorViewModel.calcResult(calculatorViewModel.calcResult() + number);
+        self.clear = function () {
+            self.currentValue("0");
+            self.nextValue("");
+            self.currentOperator("");
         }
+
+        self.numberClick = function (number) {
+            self.valueToUpdate = self.currentOperator() == "" ? self.currentValue : self.nextValue;
+
+            if (self.valueToUpdate() === "0") {
+                self.valueToUpdate(number + "");
+            } else {
+                self.valueToUpdate(self.valueToUpdate() + number);
+            }
+        }
+
+        self.operatorClick = function (operator) {
+            self.currentOperator(operator);
+        }
+
+        self.calculate = function () {
+            var value1 = parseFloat(self.currentValue());
+            var value2 = parseFloat(self.nextValue());
+            switch (self.currentOperator()) {
+                case "+":
+                    self.currentValue(value1 + value2);
+                    break;
+                case "-":
+                    self.currentValue(value1 - value2);
+                    break;
+                case "x":
+                    self.currentValue(value1 * value2);
+                    break;
+                case "÷":
+                    self.currentValue(value1 / value2);
+                    break;
+            }
+            self.nextValue("");
+            self.currentOperator("");
+        }
+
     }
 
     var calculatorViewModel = new calculatorViewinhtml();
